@@ -15,16 +15,9 @@ namespace Tests
 		//private const string Regex = @"rgb\((?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3}))\)";
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			System.Text.RegularExpressions.Regex r = new System.Text.RegularExpressions.Regex(Regex);
-			var x = r.Match("#BD4646");
-			if (x.Success)
-			{
-				var b = StringToByteArray("BD");
-				var a = new HTMLColor(
-					StringToByteArray(x.Groups[1].Value),
-					StringToByteArray(x.Groups[2].Value),
-					StringToByteArray(x.Groups[3].Value));
-			}
+			RGBA r = new RGBA(0, 1, 2,0.1F);
+			Color a = r;
+			Console.WriteLine(a);
 		}
 		public static byte StringToByteArray(string hex)
 		{

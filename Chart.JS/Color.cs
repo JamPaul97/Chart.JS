@@ -1,9 +1,9 @@
 ﻿//************************
 //**	Color Classes	**
-//**	 Version 1.0	**
+//**	 Version 2.0	**
 //************************
 using System;
-
+using System.Linq;
 namespace ChartJS
 {
 	/// <summary>
@@ -12,6 +12,7 @@ namespace ChartJS
 	public class Color
 	{
 		private byte _red, _green, _blue;
+		public readonly ColorType type;
 		private float _alpha;
 		public byte red
 		{
@@ -28,30 +29,66 @@ namespace ChartJS
 			get { return this._blue; }
 			set { this._blue = value; }
 		}
-
 		public virtual float alpha
 		{
 			get { return this._alpha; }
 			set { this._alpha = value; }
 		}
+		public Color(byte red,byte green,byte blue, float alpha =0.1f,ColorType type = ColorType.RGBA)
+		{
+			this.alpha = alpha;
+			this.red = red;
+			this.blue = blue;
+			this.green = green;
+			this.type = type;
+		}
+		public static implicit operator Color(RGB cl)
+		{
+			return new Color(cl.red, cl.green, cl.blue, type: ColorType.RGB);
+		}
+		public static implicit operator Color(RGBA cl)
+		{
+			return new Color(cl.red, cl.green, cl.blue,cl.alpha,type: ColorType.RGBA);
+		}
+		public static implicit operator Color(HTMLColor cl)
+		{
+			return new Color(cl.red, cl.green, cl.blue, type: ColorType.HTML);
+		}
+		public static implicit operator string(Color cl)
+		{
+			if (cl.type == ColorType.HTML)
+				return ((HTMLColor)cl);
+			else if (cl.type == ColorType.RGB)
+				return ((RGB)cl);
+			else return ((RGBA)cl);
+		}
+		public enum ColorType
+		{
+			RGBA, RGB, HTML
+		}
 	}
 	/// <summary>
 	/// RGB Color - rgb(255, 255, 255)
 	/// </summary>
-	public class RGB : Color
+	public class RGB
 	{
-		private const string Regex = @"rgb\((?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3}))\)";
-		public override float alpha
+		private byte _red, _green, _blue;
+		public byte red
 		{
-			get
-			{
-				throw new NotSupportedException("RGB Color does not have an alpha value");
-			}
-			set
-			{
-				throw new NotSupportedException("RGB Color does not have an alpha value");
-			}
+			get { return this._red; }
+			set { this._red = value; }
 		}
+		public byte green
+		{
+			get { return this._green; }
+			set { this._green = value; }
+		}
+		public byte blue
+		{
+			get { return this._blue; }
+			set { this._blue = value; }
+		}
+		private const string Regex = @"rgb\((?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3}))\)";
 		public RGB(byte red, byte green, byte blue)
 		{
 			this.red = red;
@@ -65,6 +102,10 @@ namespace ChartJS
 		public static implicit operator RGB(HTMLColor cl)
 		{
 			return new RGB(cl.red, cl.green, cl.blue);
+		}
+		public static implicit operator RGB(Color cl)
+		{
+			return new RGB(cl.red, cl.green,cl.blue);
 		}
 		public static implicit operator RGB(System.Drawing.Color cl)
 		{
@@ -91,8 +132,30 @@ namespace ChartJS
 	/// <summary>
 	/// RGBA Color - rgba(255, 255, 255, 1)
 	/// </summary>
-	public class RGBA : Color
+	public class RGBA
 	{
+		private byte _red, _green, _blue;
+		private float _alpha;
+		public byte red
+		{
+			get { return this._red; }
+			set { this._red = value; }
+		}
+		public byte green
+		{
+			get { return this._green; }
+			set { this._green = value; }
+		}
+		public byte blue
+		{
+			get { return this._blue; }
+			set { this._blue = value; }
+		}
+		public virtual float alpha
+		{
+			get { return this._alpha; }
+			set { this._alpha = value; }
+		}
 		private const string Regex = @"rgba\((?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:(\d{1,3})\s*,+)(?:\s*)(?:((?:[0-9]+[.])?[0-9]+)(?:\s*))\)";
 		public RGBA(byte red, byte green, byte blue, float alpha)
 		{
@@ -104,6 +167,10 @@ namespace ChartJS
 		public static implicit operator RGBA(RGB cl)
 		{
 			return new RGBA(cl.red, cl.green, cl.blue, 1);
+		}
+		public static implicit operator RGBA(Color cl)
+		{
+			return new RGBA(cl.red, cl.green, cl.blue, cl.alpha);
 		}
 		public static implicit operator RGBA(HTMLColor cl)
 		{
@@ -135,25 +202,34 @@ namespace ChartJS
 	/// <summary>
 	/// HTML Color - #FFFFFF
 	/// </summary>
-	public class HTMLColor : Color
+	public class HTMLColor
 	{
-		private const string Regex = @"(?:#)([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})";
-		public override float alpha
+		private byte _red, _green, _blue;
+		public byte red
 		{
-			get
-			{
-				throw new NotSupportedException("HTML Color does not have an alpha value");
-			}
-			set
-			{
-				throw new NotSupportedException("HTML Color does not have an alpha value");
-			}
+			get { return this._red; }
+			set { this._red = value; }
 		}
+		public byte green
+		{
+			get { return this._green; }
+			set { this._green = value; }
+		}
+		public byte blue
+		{
+			get { return this._blue; }
+			set { this._blue = value; }
+		}
+		private const string Regex = @"(?:#)([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})([a-zA-Z0-9]{2})";
 		public HTMLColor(byte red, byte green, byte blue)
 		{
 			this.red = red;
 			this.green = green;
 			this.blue = blue;
+		}
+		public static implicit operator HTMLColor(Color cl)
+		{
+			return new HTMLColor(cl.red, cl.green, cl.blue);
 		}
 		public static implicit operator HTMLColor(RGB cl)
 		{
@@ -193,9 +269,10 @@ namespace ChartJS
 		}
 		private static byte StringToByteArray(string hex)
 		{
-			return System.Linq.Enumerable.Range(0, hex.Length)
+			return Enumerable.Range(0, hex.Length)
 							 .Where(x => x % 2 == 0)
 							 .Select(x => Convert.ToByte(hex.Substring(x, 2), 16)).Single();
 		}
 	}
+	
 }
