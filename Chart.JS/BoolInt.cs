@@ -2,7 +2,7 @@
 //**	  BoolInt		**
 //**	 Version 1.0	**
 //************************
-namespace Chart.JS
+namespace ChartJS
 {
 	/// <summary>
 	/// BoolInt class value. This is a class that beening used when a property is either bool or int.

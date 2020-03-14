@@ -45,6 +45,7 @@
     <Compile Include="BoolInt.cs" />
     <Compile Include="Clip.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="Fill.cs" />
     <Compile Include="LineChart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
