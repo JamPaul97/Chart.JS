@@ -15,11 +15,11 @@ namespace ChartJS
 	{
 		//Properties
 		public Color backgroundColor = null;
-		public string borderCapStyle = null; //TODO Change this to enum
+		public CapStyle? borderCapStyle = null;
 		public Color borderColor = null;
 		public List<float> borderDash = null;
 		public float? borderDashOffset = null;
-		public string borderJoinStyle = null; //TODO Change this to enum
+		public JoinStyle? borderJoinStyle = null;
 		public float? borderWidth = null;
 		public string cubicInteroplationMode = null;
 		public Clip clip = null;
@@ -29,9 +29,9 @@ namespace ChartJS
 		public Color hoverBorderColor = null;
 		public List<float> hoverBorderDash = null;
 		public float? hoverBorderDashOffset = null;
-		public string hoverBorderJoinStyle = null; //TODO Change this to enum
+		public JoinStyle? hoverBorderJoinStyle = null;
 		public float? hoverBorderWidth = null;
-		public string labe = null;
+		public string label = null;
 		public float? lineTension = null;
 		public float? order = null;
 		public Color pointBackgroundColor = null;
@@ -44,9 +44,36 @@ namespace ChartJS
 		public float? pointHoverRadius = null;
 		public float? pointRadius = null;
 		public float? pointRotation = null;
-		public dynamic pointStyle = null; //TODO Change this to enum
+		public PointStyle? pointStyle = null;
 		public bool? showLine = null;
 		public bool? snapGaps = null;
-		public 
+		public SteppedLine steppedLine = null;
+		public string yAxisID = null;
+		public string xAxisID = null;
+	}
+	public enum PointStyle
+	{
+		circle,
+		cross,
+		crossRot,
+		dash,
+		line,
+		rect,
+		rectRounded,
+		rectRot,
+		star,
+		triangle
+	}
+	public enum JoinStyle
+	{
+		bevel,
+		round,
+		miter
+	}
+	public enum CapStyle
+	{
+		butt,
+		round,
+		square
 	}
 }
