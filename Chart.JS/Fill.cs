@@ -3,7 +3,7 @@
 //**	 Version 1.0	**
 //************************
 
-namespace Chart.JS
+namespace ChartJS
 {
 	/// <summary>
 	/// Fill class
@@ -15,7 +15,7 @@ namespace Chart.JS
 		private Boundary? boundary = null;
 		private bool? disabled = null;
 		/// <summary>
-		/// Creates a fill class with one of the chossen values. If more than one values is chosses then the first value of the list bellow will be returned when compliling.
+		/// Creates a fill class with one of the chossen values. If more than one values is chosen then the first value of the list bellow will be returned when compliling.
 		/// <br>1.Absolute Number</br>
 		/// <br>2.Relative Number</br>
 		/// <br>3.Boundary</br>
